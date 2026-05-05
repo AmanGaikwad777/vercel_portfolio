@@ -114,7 +114,7 @@ export function ContactSection() {
           }}
         >
           <a
-            href="mailto:aman@example.com"
+            href="mailto:amangaikwad777@gmail.com"
             className="group flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-full hover:scale-105 transition-all duration-150"
             style={{
               transform: `perspective(500px) rotateY(${cursorX * 8}deg) rotateX(${
@@ -157,7 +157,7 @@ export function ContactSection() {
               label: "LinkedIn",
             },
             {
-              href: "mailto:aman@example.com",
+              href: "mailto:amangaikwad777@gmail.com",
               icon: Mail,
               label: "Email",
             },
