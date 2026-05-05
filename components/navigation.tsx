@@ -15,12 +15,19 @@ const navItems = [
 
 export function Navigation() {
   const [activeSection, setActiveSection] = useState("home")
+  const [windowHeight, setWindowHeight] = useState(0)
   const { scrollY, mouseXPercent } = useParallaxContext()
   const scrolled = scrollY > 50
 
   useEffect(() => {
+    setWindowHeight(window.innerHeight)
+  }, [])
+
+  useEffect(() => {
+    if (windowHeight === 0) return
+
     const sections = navItems.map((item) => item.href.slice(1))
-    const scrollPosition = scrollY + window.innerHeight / 3
+    const scrollPosition = scrollY + windowHeight / 3
 
     let newActiveSection = "home"
 
@@ -36,7 +43,7 @@ export function Navigation() {
     setActiveSection((prev) =>
       prev !== newActiveSection ? newActiveSection : prev
     )
-  }, [scrollY])
+  }, [scrollY, windowHeight])
 
   return (
     <nav

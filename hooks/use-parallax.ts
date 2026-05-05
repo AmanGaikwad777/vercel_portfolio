@@ -21,7 +21,7 @@ export function useParallax() {
     mouseYPercent: 0.5,
   })
   
-  const rafRef = useRef<number>()
+  const rafRef = useRef<number | null>(null)
   const targetRef = useRef<ParallaxState>(state)
 
   const lerp = (start: number, end: number, factor: number) => {

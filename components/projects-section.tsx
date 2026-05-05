@@ -75,6 +75,7 @@ export function ProjectsSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const { mouseXPercent, mouseYPercent, scrollY } = useParallaxContext()
   const [sectionTop, setSectionTop] = useState(0)
+  const [windowHeight, setWindowHeight] = useState(0)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
   useEffect(() => {
@@ -82,7 +83,9 @@ export function ProjectsSection() {
       if (sectionRef.current) {
         setSectionTop(sectionRef.current.offsetTop)
       }
+      setWindowHeight(window.innerHeight)
     }
+
     updatePosition()
     window.addEventListener("resize", updatePosition)
     return () => window.removeEventListener("resize", updatePosition)
@@ -90,7 +93,18 @@ export function ProjectsSection() {
 
   const cursorX = (mouseXPercent - 0.5) * 2
   const cursorY = (mouseYPercent - 0.5) * 2
-  const sectionProgress = Math.max(0, Math.min(1, (scrollY - sectionTop + window.innerHeight * 0.8) / (window.innerHeight * 1.2)))
+
+  const sectionProgress =
+    windowHeight > 0
+      ? Math.max(
+          0,
+          Math.min(
+            1,
+            (scrollY - sectionTop + windowHeight * 0.8) /
+              (windowHeight * 1.2)
+          )
+        )
+      : 0
 
   return (
     <section
@@ -98,45 +112,55 @@ export function ProjectsSection() {
       ref={sectionRef}
       className="relative min-h-screen py-32 overflow-hidden"
     >
-      {/* Paint splashes - fast response */}
       <div
         className="absolute top-20 right-20 w-[600px] h-[600px] bg-primary/12 rounded-full blur-3xl"
         style={{
-          transform: `translate(${-cursorX * 120}px, ${sectionProgress * 200 + cursorY * 80}px)`,
+          transform: `translate(${-cursorX * 120}px, ${
+            sectionProgress * 200 + cursorY * 80
+          }px)`,
         }}
       />
       <div
         className="absolute bottom-40 left-0 w-[500px] h-[500px] bg-secondary/12 rounded-full blur-3xl"
         style={{
-          transform: `translate(${cursorX * 100}px, ${-sectionProgress * 180 + cursorY * 60}px)`,
+          transform: `translate(${cursorX * 100}px, ${
+            -sectionProgress * 180 + cursorY * 60
+          }px)`,
         }}
       />
 
-      {/* Paint strokes */}
-      <div 
+      <div
         className="absolute top-1/4 left-0 w-20 h-2 bg-primary opacity-70"
         style={{
-          transform: `scaleX(${sectionProgress * 2}) rotate(${cursorX * 20}deg)`,
+          transform: `scaleX(${sectionProgress * 2}) rotate(${
+            cursorX * 20
+          }deg)`,
           transformOrigin: "left",
         }}
       />
-      <div 
+      <div
         className="absolute bottom-1/3 right-0 w-32 h-2 bg-secondary opacity-70"
         style={{
-          transform: `scaleX(${sectionProgress * 1.5}) rotate(${-cursorY * 15}deg)`,
+          transform: `scaleX(${sectionProgress * 1.5}) rotate(${
+            -cursorY * 15
+          }deg)`,
           transformOrigin: "right",
         }}
       />
 
       <div className="relative z-10 mx-auto max-w-6xl px-6">
-        <div 
+        <div
           className="text-center mb-16"
           style={{
-            transform: `translateY(${(1 - sectionProgress) * 50}px) translateX(${cursorX * -25}px)`,
+            transform: `translateY(${(1 - sectionProgress) * 50}px) translateX(${
+              cursorX * -25
+            }px)`,
             opacity: sectionProgress,
           }}
         >
-          <span className="text-primary font-mono text-sm tracking-wider">03</span>
+          <span className="text-primary font-mono text-sm tracking-wider">
+            03
+          </span>
           <h2 className="mt-2 text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
             Projects
           </h2>
@@ -147,17 +171,21 @@ export function ProjectsSection() {
             const row = Math.floor(index / 2)
             const col = index % 2
             const isHovered = hoveredIndex === index
-            
+
             return (
               <div
                 key={index}
                 className="group relative p-6 bg-card rounded-2xl border border-border hover:border-primary/50 transition-all duration-150 cursor-pointer"
                 style={{
                   transform: `
-                    perspective(1000px) 
-                    rotateY(${isHovered ? cursorX * 12 : cursorX * 3}deg) 
+                    perspective(1000px)
+                    rotateY(${isHovered ? cursorX * 12 : cursorX * 3}deg)
                     rotateX(${isHovered ? cursorY * -10 : cursorY * -2}deg)
-                    translateX(${col === 0 ? (1 - sectionProgress) * -50 : (1 - sectionProgress) * 50}px)
+                    translateX(${
+                      col === 0
+                        ? (1 - sectionProgress) * -50
+                        : (1 - sectionProgress) * 50
+                    }px)
                     translateY(${(1 - sectionProgress) * (40 + row * 25)}px)
                     scale(${isHovered ? 1.03 : 1})
                   `,
@@ -167,7 +195,6 @@ export function ProjectsSection() {
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
-                {/* Category badge */}
                 <span
                   className={`absolute top-4 right-4 px-3 py-1 text-xs font-bold rounded-full ${
                     project.color === "primary"
@@ -193,7 +220,9 @@ export function ProjectsSection() {
                       key={skill}
                       className="px-2 py-1 text-xs font-medium text-muted-foreground bg-muted rounded hover:bg-primary/20 hover:text-primary transition-all duration-150"
                       style={{
-                        transform: `translateX(${cursorX * (3 + skillIndex * 2)}px)`,
+                        transform: `translateX(${
+                          cursorX * (3 + skillIndex * 2)
+                        }px)`,
                       }}
                     >
                       {skill}
@@ -201,16 +230,16 @@ export function ProjectsSection() {
                   ))}
                 </div>
 
-                {/* Hover icons */}
                 <div className="absolute bottom-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-150">
                   <Github className="w-4 h-4 text-muted-foreground hover:text-primary transition-colors cursor-pointer" />
                   <ExternalLink className="w-4 h-4 text-muted-foreground hover:text-primary transition-colors cursor-pointer" />
                 </div>
 
-                {/* Bottom accent line */}
                 <div
                   className={`absolute bottom-0 left-6 right-6 h-0.5 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ${
-                    project.color === "primary" ? "bg-primary" : "bg-secondary"
+                    project.color === "primary"
+                      ? "bg-primary"
+                      : "bg-secondary"
                   }`}
                 />
               </div>

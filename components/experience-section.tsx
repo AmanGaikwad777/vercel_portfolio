@@ -29,13 +29,16 @@ export function ExperienceSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const { mouseXPercent, mouseYPercent, scrollY } = useParallaxContext()
   const [sectionTop, setSectionTop] = useState(0)
+  const [windowHeight, setWindowHeight] = useState(0)
 
   useEffect(() => {
     const updatePosition = () => {
       if (sectionRef.current) {
         setSectionTop(sectionRef.current.offsetTop)
       }
+      setWindowHeight(window.innerHeight)
     }
+
     updatePosition()
     window.addEventListener("resize", updatePosition)
     return () => window.removeEventListener("resize", updatePosition)
@@ -43,7 +46,17 @@ export function ExperienceSection() {
 
   const cursorX = (mouseXPercent - 0.5) * 2
   const cursorY = (mouseYPercent - 0.5) * 2
-  const sectionProgress = Math.max(0, Math.min(1, (scrollY - sectionTop + window.innerHeight * 0.8) / (window.innerHeight)))
+
+  const sectionProgress =
+    windowHeight > 0
+      ? Math.max(
+          0,
+          Math.min(
+            1,
+            (scrollY - sectionTop + windowHeight * 0.8) / windowHeight
+          )
+        )
+      : 0
 
   return (
     <section
@@ -51,22 +64,24 @@ export function ExperienceSection() {
       ref={sectionRef}
       className="relative min-h-screen py-32 overflow-hidden"
     >
-      {/* Paint splashes - fast response */}
       <div
         className="absolute top-40 left-0 w-[500px] h-[500px] bg-secondary/12 rounded-full blur-3xl"
         style={{
-          transform: `translate(${cursorX * 100}px, ${sectionProgress * 180 + cursorY * 70}px)`,
+          transform: `translate(${cursorX * 100}px, ${
+            sectionProgress * 180 + cursorY * 70
+          }px)`,
         }}
       />
       <div
         className="absolute bottom-20 right-0 w-[400px] h-[400px] bg-primary/12 rounded-full blur-3xl"
         style={{
-          transform: `translate(${-cursorX * 80}px, ${-sectionProgress * 150 + cursorY * 50}px)`,
+          transform: `translate(${-cursorX * 80}px, ${
+            -sectionProgress * 150 + cursorY * 50
+          }px)`,
         }}
       />
 
-      {/* Paint stroke */}
-      <div 
+      <div
         className="absolute top-1/2 right-0 w-1/4 h-1 bg-gradient-to-l from-secondary to-transparent opacity-70"
         style={{
           transform: `scaleX(${sectionProgress}) translateX(${-cursorX * 50}px)`,
@@ -75,14 +90,18 @@ export function ExperienceSection() {
       />
 
       <div className="relative z-10 mx-auto max-w-6xl px-6">
-        <div 
+        <div
           className="text-center mb-16"
           style={{
-            transform: `translateY(${(1 - sectionProgress) * 40}px) translateX(${cursorX * -20}px)`,
+            transform: `translateY(${(1 - sectionProgress) * 40}px) translateX(${
+              cursorX * -20
+            }px)`,
             opacity: sectionProgress,
           }}
         >
-          <span className="text-secondary font-mono text-sm tracking-wider">02</span>
+          <span className="text-secondary font-mono text-sm tracking-wider">
+            02
+          </span>
           <h2 className="mt-2 text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
             Experience
           </h2>
@@ -98,13 +117,16 @@ export function ExperienceSection() {
                   perspective(1000px) 
                   rotateY(${cursorX * 5}deg) 
                   rotateX(${cursorY * -3}deg)
-                  translateX(${index % 2 === 0 ? (1 - sectionProgress) * -60 : (1 - sectionProgress) * 60}px)
+                  translateX(${
+                    index % 2 === 0
+                      ? (1 - sectionProgress) * -60
+                      : (1 - sectionProgress) * 60
+                  }px)
                   translateY(${(1 - sectionProgress) * (30 + index * 20)}px)
                 `,
                 opacity: sectionProgress,
               }}
             >
-              {/* Color accent bar */}
               <div
                 className={`absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl ${
                   exp.color === "primary" ? "bg-primary" : "bg-secondary"
@@ -119,26 +141,35 @@ export function ExperienceSection() {
                 <div className="md:w-32 shrink-0">
                   <span
                     className={`text-4xl font-bold ${
-                      exp.color === "primary" ? "text-primary" : "text-secondary"
+                      exp.color === "primary"
+                        ? "text-primary"
+                        : "text-secondary"
                     }`}
                   >
                     {exp.period}
                   </span>
                 </div>
+
                 <div className="flex-1">
                   <h3 className="text-xl font-semibold text-foreground flex items-center gap-2">
                     {exp.title}
                     <span className="text-muted-foreground font-normal">·</span>
                     <span
-                      className={exp.color === "primary" ? "text-primary" : "text-secondary"}
+                      className={
+                        exp.color === "primary"
+                          ? "text-primary"
+                          : "text-secondary"
+                      }
                     >
                       {exp.company}
                     </span>
                     <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-muted-foreground" />
                   </h3>
+
                   <p className="mt-3 text-muted-foreground leading-relaxed">
                     {exp.description}
                   </p>
+
                   <div className="mt-4 flex flex-wrap gap-2">
                     {exp.skills.map((skill, skillIndex) => (
                       <span
@@ -149,7 +180,11 @@ export function ExperienceSection() {
                             : "text-secondary bg-secondary/10"
                         }`}
                         style={{
-                          transform: `translateY(${(1 - sectionProgress) * (15 + skillIndex * 4)}px) translateX(${cursorX * (5 + skillIndex * 2)}px)`,
+                          transform: `translateY(${
+                            (1 - sectionProgress) * (15 + skillIndex * 4)
+                          }px) translateX(${
+                            cursorX * (5 + skillIndex * 2)
+                          }px)`,
                         }}
                       >
                         {skill}
