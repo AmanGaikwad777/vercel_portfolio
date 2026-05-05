@@ -127,7 +127,7 @@ export function ContactSection() {
           </a>
 
           <a
-            href="/resume.pdf"
+            href="https://drive.google.com/file/d/1t-XoIwnSwJynyeU81cEGPeX34-8Usqjt/view?usp=sharing"
             className="flex items-center gap-2 px-8 py-4 border-2 border-secondary text-secondary font-semibold rounded-full hover:bg-secondary hover:text-secondary-foreground hover:scale-105 transition-all duration-150"
             style={{
               transform: `perspective(500px) rotateY(${

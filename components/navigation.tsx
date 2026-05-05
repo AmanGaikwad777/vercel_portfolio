@@ -95,7 +95,7 @@ export function Navigation() {
           </div>
 
           <a
-            href="/resume.pdf"
+            href="https://drive.google.com/file/d/1t-XoIwnSwJynyeU81cEGPeX34-8Usqjt/view?usp=sharing"
             className="px-4 py-2 text-sm font-medium text-primary-foreground bg-primary rounded-full hover:scale-105 transition-all duration-300"
             style={{
               transform: `translateX(${(mouseXPercent - 0.5) * 8}px)`,
