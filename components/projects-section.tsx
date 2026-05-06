@@ -3,7 +3,8 @@
 import { useRef, useEffect, useState } from "react"
 import { ExternalLink, Github } from "lucide-react"
 import { useParallaxContext } from "./parallax-provider"
-import { link } from "fs"
+
+const githubProfile = "https://github.com/AmanGaikwad777"
 
 const projects = [
   {
@@ -67,7 +68,7 @@ const projects = [
     skills: ["Flutter", "Firebase", "REST API"],
     category: "Mobile",
     color: "primary",
-    // link: "",
+    link: "https://github.com/AmanGaikwad777",
   },
   {
     title: "Automated ML Pipeline",
@@ -138,32 +139,11 @@ export function ProjectsSection() {
         }}
       />
 
-      <div
-        className="absolute top-1/4 left-0 w-20 h-2 bg-primary opacity-70"
-        style={{
-          transform: `scaleX(${sectionProgress * 2}) rotate(${
-            cursorX * 20
-          }deg)`,
-          transformOrigin: "left",
-        }}
-      />
-      <div
-        className="absolute bottom-1/3 right-0 w-32 h-2 bg-secondary opacity-70"
-        style={{
-          transform: `scaleX(${sectionProgress * 1.5}) rotate(${
-            -cursorY * 15
-          }deg)`,
-          transformOrigin: "right",
-        }}
-      />
-
       <div className="relative z-10 mx-auto max-w-6xl px-6">
         <div
           className="text-center mb-16"
           style={{
-            transform: `translateY(${(1 - sectionProgress) * 50}px) translateX(${
-              cursorX * -25
-            }px)`,
+            transform: `translateY(${(1 - sectionProgress) * 50}px)`,
             opacity: sectionProgress,
           }}
         >
@@ -184,6 +164,7 @@ export function ProjectsSection() {
             return (
               <div
                 key={index}
+                onClick={() => window.open(project.link, "_blank")}
                 className="group relative p-6 bg-card rounded-2xl border border-border hover:border-primary/50 transition-all duration-150 cursor-pointer"
                 style={{
                   transform: `
@@ -240,8 +221,20 @@ export function ProjectsSection() {
                 </div>
 
                 <div className="absolute bottom-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-150">
-                  <Github className="w-4 h-4 text-muted-foreground hover:text-primary transition-colors cursor-pointer" />
-                  <ExternalLink className="w-4 h-4 text-muted-foreground hover:text-primary transition-colors cursor-pointer" />
+                  <Github
+                    className="w-4 h-4 text-muted-foreground hover:text-primary transition-colors cursor-pointer"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      window.open(githubProfile, "_blank")
+                    }}
+                  />
+                  <ExternalLink
+                    className="w-4 h-4 text-muted-foreground hover:text-primary transition-colors cursor-pointer"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      window.open(project.link, "_blank")
+                    }}
+                  />
                 </div>
 
                 <div
