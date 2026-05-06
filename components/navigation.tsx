@@ -96,6 +96,8 @@ export function Navigation() {
 
           <a
             href="https://drive.google.com/file/d/1t-XoIwnSwJynyeU81cEGPeX34-8Usqjt/view?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
             className="px-4 py-2 text-sm font-medium text-primary-foreground bg-primary rounded-full hover:scale-105 transition-all duration-300"
             style={{
               transform: `translateX(${(mouseXPercent - 0.5) * 8}px)`,
