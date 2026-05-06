@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState } from "react"
 import { ExternalLink, Github } from "lucide-react"
 import { useParallaxContext } from "./parallax-provider"
+import { link } from "fs"
 
 const projects = [
   {
@@ -12,6 +13,7 @@ const projects = [
     skills: ["EfficientNet", "TensorFlow", "Computer Vision"],
     category: "CV",
     color: "primary",
+    link: "https://github.com/AmanGaikwad777/Real-and-Fake-Image-Classifier",
   },
   {
     title: "Dog Breed Classifier",
@@ -20,6 +22,7 @@ const projects = [
     skills: ["MobileNetV2", "Transfer Learning", "Keras"],
     category: "CV",
     color: "secondary",
+    link: "https://github.com/AmanGaikwad777/DogBreedClassification",
   },
   {
     title: "LLM-Powered BDD Testing",
@@ -28,6 +31,7 @@ const projects = [
     skills: ["Ollama", "Playwright", "LLM"],
     category: "AI",
     color: "primary",
+    link: "https://github.com/AmanGaikwad777/LLM-BDD-Testing",
   },
   {
     title: "SMS Spam Classification",
@@ -36,6 +40,7 @@ const projects = [
     skills: ["NLP", "Scikit-Learn", "Text Classification"],
     category: "NLP",
     color: "secondary",
+    link: "https://github.com/AmanGaikwad777/SMS_Dataset_Creation_and_Spam_Classification_Work_in_progress",
   },
   {
     title: "Disease Prediction System",
@@ -44,6 +49,7 @@ const projects = [
     skills: ["ML", "Healthcare AI", "Scikit-Learn"],
     category: "Health",
     color: "primary",
+    link: "https://github.com/AmanGaikwad777/disease_predictor",
   },
   {
     title: "Hand Gesture Recognition",
@@ -52,6 +58,7 @@ const projects = [
     skills: ["DenseNet", "Deep Learning", "Real-time CV"],
     category: "CV",
     color: "secondary",
+    link: "https://github.com/AmanGaikwad777/HGR_Using_DenseNet_Inception",
   },
   {
     title: "Flutter Applications Suite",
@@ -60,6 +67,7 @@ const projects = [
     skills: ["Flutter", "Firebase", "REST API"],
     category: "Mobile",
     color: "primary",
+    // link: "",
   },
   {
     title: "Automated ML Pipeline",
@@ -68,6 +76,7 @@ const projects = [
     skills: ["MLOps", "Python", "Automation"],
     category: "MLOps",
     color: "secondary",
+    link: "https://github.com/AmanGaikwad777/Automated-Machine-Learning-Pipeline-with-JSON-driven-Configuration",
   },
 ]
 
